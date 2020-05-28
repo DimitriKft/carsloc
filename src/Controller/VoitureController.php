@@ -3,17 +3,24 @@
 namespace App\Controller;
 
 use App\Repository\VoitureRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class VoitureController extends AbstractController
 {
     /**
      * @Route("/client/voitures", name="voitures")
      */
-    public function index(VoitureRepository $repo)
+    public function index(VoitureRepository $repo, PaginatorInterface $paginatorInterface, Request $request)
     {
-        $voitures = $repo->findAll();
+        $voitures = $paginatorInterface->paginate(
+            $repo->findAllWithPagination(),
+            $request->query->getInt('page', 1),
+            6 /*limit per page*/
+        );
         return $this->render('voiture/voitures.html.twig', [
             "voitures" => $voitures
         ]);
