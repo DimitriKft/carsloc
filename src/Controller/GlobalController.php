@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Event\AuthenticationEvent;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class GlobalController extends AbstractController
 {
@@ -20,7 +22,7 @@ class GlobalController extends AbstractController
         return $this->render('global/acceuil.html.twig');
     }
 
-     /**
+    /**
      * @Route("/inscription", name="inscription")
      */
     public function inscription(Request $request, EntityManagerInterface $entitymanager, UserPasswordEncoderInterface $encoder)
@@ -42,4 +44,25 @@ class GlobalController extends AbstractController
             "form" => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/login", name="login")
+     */
+    public function login(AuthenticationUtils $util)
+    {
+        return $this->render('global/login.html.twig', [
+            "lastUserName" => $util->getLastUserName(),
+            "error" => $util->getLastAuthenticationError()
+        ]);
+    }
+
+     /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+
+    }
+    
+    
 }
