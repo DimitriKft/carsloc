@@ -10,11 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
-class VoitureController extends AbstractController
+class AdminController extends AbstractController
 {
     /**
-     * @Route("/client/voitures", name="voitures")
+     * @Route("/admin", name="admin")
      */
     public function index(VoitureRepository $repo, PaginatorInterface $paginatorInterface, Request $request)
     {
@@ -30,7 +29,7 @@ class VoitureController extends AbstractController
         return $this->render('voiture/voitures.html.twig', [
             "voitures" => $voitures,
             "form"     => $form->createView(),
-            "admin"    => false  
+            "admin"    => true 
         ]);
     }
 }

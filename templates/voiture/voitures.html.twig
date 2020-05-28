@@ -16,6 +16,9 @@
             </div>
         </div>
     {{ form_end(form) }}
+    {% if admin %}
+        <a href="" class="d-block btn btn-success">Ajouter une voiture</a>
+    {% endif %}
     <div class="row no-gutters">
         {% for voiture in voitures %}
             <div class="col-12 col-lg-6 p-1">
@@ -36,6 +39,12 @@
                             </div>
                         </div>
                     </div>
+                    {% if admin %}
+                        <div class="row no-gutters">
+                            <a href="" class="col btn btn-warning">Modifier</a>
+                            <a href="" class="col btn btn-danger">Supprimer</a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
